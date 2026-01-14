@@ -1,0 +1,5 @@
+mesa==2.*
+numpy>=1.26
+mesa-viz-tornado==0.1.*
+pandas>=2.1,<3
+litellm[gemini]>=1.41,<2
