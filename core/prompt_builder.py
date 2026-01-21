@@ -9,27 +9,17 @@ except ImportError:
     from translator import Translator, AttrSpec
 
 def _strip_trailing_punct(s: str) -> str:
-    """去掉末尾的 .!? 和空格，避免 '..'。"""
     return s.strip().rstrip(" .!?")
 
 def _age_phrase(age_text: str, lowercase: bool = True) -> str:
-    """
-    把 'Early adolescence (11-14)' → 'early adolescence'
-    把 'childhood (6-10)' → 'childhood'
-    """
     label = age_text.split("(")[0].strip()
     return label.lower() if lowercase else label
 
 def _join_options(options: Iterable[str]) -> str:
-    """把 options 列表拼成 'a, b, c, d' 的形式（按你模板样式）"""
     opts = [str(o).strip() for o in options if str(o).strip()]
     return ", ".join(opts)
 
 def _enumerate_options(options: Iterable[str]) -> str:
-    """
-    渲染成：'1) optA, 2) optB, 3) optC'。
-    不换行，按你给的风格。
-    """
     opts = [str(o).strip() for o in options if str(o).strip()]
     return ", ".join(f"{i}) {o}" for i, o in enumerate(opts, 1))
 
@@ -44,9 +34,6 @@ def _options_block(options: Iterable[str]) -> str:
 
 
 class PromptBuilder:
-    """
-    用 Translator 将属性转成自然语言，并按模板拼装 6 个决策的 prompt：
-    """
 
     def __init__(self, country: str = "Ethiopia", translator: Translator | None = None):
         self.country = country
